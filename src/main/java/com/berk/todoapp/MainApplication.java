@@ -1,5 +1,6 @@
 package com.berk.todoapp;
 
+import com.berk.todoapp.controller.DatabaseAccessController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,6 +17,8 @@ public class MainApplication extends Application {
         stage.setTitle("Giriş Ekranı");
         stage.setScene(scene);
         stage.show();
+
+        DatabaseAccessController dbController= DatabaseAccessController.getInstance();
     }
 
     public static void main(String[] args) {

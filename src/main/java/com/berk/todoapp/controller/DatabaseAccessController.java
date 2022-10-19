@@ -1,9 +1,11 @@
 package com.berk.todoapp.controller;
 
+import com.berk.todoapp.model.User;
 import javafx.scene.chart.PieChart;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseAccessController {
@@ -27,6 +29,9 @@ public class DatabaseAccessController {
     private Statement statement = null;
 
 
+
+
+
 //select todo,iscompleted from todo where userid = (select id from users where email = 'berkko@gmail.com');
 
 
@@ -41,4 +46,18 @@ public class DatabaseAccessController {
             e.printStackTrace();
         }
     }
+
+
+
+    public void addUser(User user) throws SQLException {
+        String sql = "insert into users (email, password) values ('"+user.getEmail()+"','"+user.getPassword()+"')";
+        statement.addBatch(sql);
+        statement.executeBatch();
+    }
+
+
+
+
+
+
 }
