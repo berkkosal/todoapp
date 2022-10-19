@@ -1,4 +1,4 @@
-package com.berk.todoapp;
+package com.berk.todoapp.controller;
 
 public class HomePageController {
 }
