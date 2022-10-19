@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="508.0" prefWidth="322.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.berk.todoapp.controller.SignUpController">
+   <children>
+      <TextField fx:id="emailRegisterTextField" layoutX="72.0" layoutY="132.0" promptText="E-Mail" />
+      <PasswordField fx:id="passwordRegisterPassField" layoutX="72.0" layoutY="197.0" promptText="Password" />
+      <Button fx:id="signUpButton" layoutX="132.0" layoutY="300.0" mnemonicParsing="false" onAction="#signUpButtonOnAction" text="Sign Up" />
+   </children>
+</AnchorPane>

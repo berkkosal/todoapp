@@ -63,7 +63,7 @@ public class DatabaseAccessController {
     }
 
 
-    public void sendMail(String email) {
+    private void sendMail(String email) {
 
 
     }
