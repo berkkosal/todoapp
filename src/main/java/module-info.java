@@ -4,6 +4,8 @@ module com.berk.todoapp {
     requires java.sql;
     requires spring.security.core;
     requires spring.security.crypto;
+    requires javax.mail.api;
+    requires activation;
 
     opens com.berk.todoapp to javafx.fxml;
     exports com.berk.todoapp;
