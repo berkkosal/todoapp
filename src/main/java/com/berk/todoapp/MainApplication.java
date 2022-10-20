@@ -1,6 +1,7 @@
 package com.berk.todoapp;
 
 import com.berk.todoapp.controller.DatabaseAccessController;
+import com.berk.todoapp.controller.MailSenderController;
 import com.berk.todoapp.model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,10 @@ public class MainApplication extends Application {
         stage.setTitle("Giriş Ekranı");
         stage.setScene(scene);
         stage.show();
-        
+
+        MailSenderController mailSenderController = new MailSenderController();
+        mailSenderController.sendMail("kosalnberk@gmail.com");
+
 
 
     }
