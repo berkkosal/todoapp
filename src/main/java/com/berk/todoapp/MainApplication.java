@@ -10,22 +10,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainApplication extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/signup-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Giriş Ekranı");
         stage.setScene(scene);
         stage.show();
 
-        MailSenderController mailSenderController = new MailSenderController();
-        mailSenderController.sendMail("kosalnberk@gmail.com");
+        User user = new User();
+        user.setEmail("said");
 
-        ToDoController toDoController = new ToDoController();
-        toDoController.showAllToDo();
+        DatabaseAccessController.getInstance().getUserIdFromDataBase(user);
+
+
 
 
 

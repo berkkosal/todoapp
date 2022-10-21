@@ -4,10 +4,7 @@ import com.berk.todoapp.model.User;
 import javafx.scene.chart.PieChart;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseAccessController {
     //***************************Singeleton***************************//
@@ -68,5 +65,27 @@ public class DatabaseAccessController {
 
     }
 
+    private void addToDo(){
+
+
+    }
+
+    private void removeToDo(){
+
+    }
+
+    public void getUserIdFromDataBase(User user) throws SQLException {
+        String sql = "select id from users where email =('"+user.getEmail()+"')";
+        ResultSet rs = statement.executeQuery(sql);
+        while (rs.next()){
+            int sayi = rs.getInt("id");
+            System.out.println(sayi);
+        }
+
+    }
+
+    public void showAllToDo(){
+        
+    }
 
 }
