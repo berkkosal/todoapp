@@ -7,6 +7,7 @@ import com.berk.todoapp.model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,7 +26,11 @@ public class MainApplication extends Application {
         User user = new User();
         user.setEmail("said");
 
+
+
+
         DatabaseAccessController.getInstance().showAllToDo(user);
+        DatabaseAccessController.getInstance().addToDo(user,"şunu götür getir");
 
 
 

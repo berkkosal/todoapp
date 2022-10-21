@@ -65,7 +65,15 @@ public class DatabaseAccessController {
 
     }
 
-    private void addToDo(){
+
+    public void addToDo(User user,String todo) throws SQLException {
+        sql = "insert into todo (userid,todo,iscompleted) values ('"+getUserIdFromDataBase(user)+"','"+todo+"', false)";
+        statement.addBatch(sql);
+        statement.executeBatch();
+
+    }
+
+    public void changeToDoStatus(User user){
 
 
     }
