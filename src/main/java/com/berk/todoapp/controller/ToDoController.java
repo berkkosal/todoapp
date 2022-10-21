@@ -1,24 +1,23 @@
 package com.berk.todoapp.controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+
 public class ToDoController {
 
 
-    public boolean isCompletedToDo(){
-        return false;
-    }
-
-    public void removeToDo(){
-
-    }
-
-    public void addToDo(){
-
-    }
-
-    public void showAllToDo(){
+    @FXML
+    private Label addToDoLabel;
 
 
-    }
+
+
+
+
+
+
+
 
 
 
