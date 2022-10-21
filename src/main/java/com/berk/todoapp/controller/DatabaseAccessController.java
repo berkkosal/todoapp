@@ -26,7 +26,7 @@ public class DatabaseAccessController {
     private final String dataPassword = "123";
     private Connection connection = null;
     private Statement statement = null;
-
+    private String sql;
 
 //select todo,iscompleted from todo where userid = (select id from users where email = 'berkko@gmail.com');
 
@@ -45,7 +45,7 @@ public class DatabaseAccessController {
 
 
     private void addUser(User user) throws SQLException {
-        String sql = "insert into users (email, password) values ('" + user.getEmail() + "','" + user.getPassword() + "')";
+        sql = "insert into users (email, password) values ('" + user.getEmail() + "','" + user.getPassword() + "')";
         statement.addBatch(sql);
         statement.executeBatch();
     }
@@ -74,18 +74,29 @@ public class DatabaseAccessController {
 
     }
 
-    public void getUserIdFromDataBase(User user) throws SQLException {
-        String sql = "select id from users where email =('"+user.getEmail()+"')";
+    public int getUserIdFromDataBase(User user) throws SQLException {
+        int id = 0;
+        sql = "select id from users where email =('"+user.getEmail()+"')";
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()){
-            int sayi = rs.getInt("id");
-            System.out.println(sayi);
+            id = rs.getInt("id");
+            System.out.println("User id : " + id);
         }
-
+        return id;
     }
 
-    public void showAllToDo(){
-        
+    public void showAllToDo(User user) throws SQLException {
+        String todo=null;
+        String isCompleted = null;
+        sql = "select todo,iscompleted from todo where userid = ('"+getUserIdFromDataBase(user)+"')";
+        ResultSet rs = statement.executeQuery(sql);
+        while (rs.next()){
+            todo = rs.getString("todo");
+            isCompleted = rs.getString("iscompleted");
+            System.out.println(todo + isCompleted);
+
+        }
+
     }
 
 }

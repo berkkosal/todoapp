@@ -25,7 +25,7 @@ public class MainApplication extends Application {
         User user = new User();
         user.setEmail("said");
 
-        DatabaseAccessController.getInstance().getUserIdFromDataBase(user);
+        DatabaseAccessController.getInstance().showAllToDo(user);
 
 
 
