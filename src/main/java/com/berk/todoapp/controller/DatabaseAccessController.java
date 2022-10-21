@@ -74,7 +74,7 @@ public class DatabaseAccessController {
 
     }
 
-    public int getUserIdFromDataBase(User user) throws SQLException {
+    private int getUserIdFromDataBase(User user) throws SQLException {
         int id = 0;
         sql = "select id from users where email =('"+user.getEmail()+"')";
         ResultSet rs = statement.executeQuery(sql);
@@ -87,13 +87,13 @@ public class DatabaseAccessController {
 
     public void showAllToDo(User user) throws SQLException {
         String todo=null;
-        String isCompleted = null;
+        Boolean isCompleted = false;
         sql = "select todo,iscompleted from todo where userid = ('"+getUserIdFromDataBase(user)+"')";
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()){
             todo = rs.getString("todo");
-            isCompleted = rs.getString("iscompleted");
-            System.out.println(todo + isCompleted);
+            isCompleted = rs.getBoolean("iscompleted");
+            System.out.println("ToDo: " + todo + "     Status: " + isCompleted);
 
         }
 
