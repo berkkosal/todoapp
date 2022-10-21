@@ -7,8 +7,6 @@ import javafx.scene.layout.AnchorPane;
 public class ToDoController {
 
 
-    @FXML
-    private Label addToDoLabel;
 
 
 

@@ -1,13 +1,10 @@
 package com.berk.todoapp;
 
 import com.berk.todoapp.controller.DatabaseAccessController;
-import com.berk.todoapp.controller.MailSenderController;
-import com.berk.todoapp.controller.ToDoController;
 import com.berk.todoapp.model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,7 +26,7 @@ public class MainApplication extends Application {
 
 
 
-        DatabaseAccessController.getInstance().showAllToDo(user);
+        DatabaseAccessController.getInstance().getToDoListByUser(user);
         DatabaseAccessController.getInstance().addToDo(user,"şunu götür getir");
 
 

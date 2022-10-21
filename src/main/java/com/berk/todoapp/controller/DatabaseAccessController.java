@@ -1,10 +1,11 @@
 package com.berk.todoapp.controller;
 
+import com.berk.todoapp.model.ToDo;
 import com.berk.todoapp.model.User;
-import javafx.scene.chart.PieChart;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseAccessController {
     //***************************Singeleton***************************//
@@ -28,7 +29,6 @@ public class DatabaseAccessController {
     private Statement statement = null;
     private String sql;
 
-//select todo,iscompleted from todo where userid = (select id from users where email = 'berkko@gmail.com');
 
 
     private void init() {
@@ -67,13 +67,19 @@ public class DatabaseAccessController {
 
 
     public void addToDo(User user,String todo) throws SQLException {
-        sql = "insert into todo (userid,todo,iscompleted) values ('"+getUserIdFromDataBase(user)+"','"+todo+"', false)";
+        sql = "insert into todo (userid,todo) values ('"+getUserIdFromDataBase(user)+"','"+todo+"')";
         statement.addBatch(sql);
         statement.executeBatch();
 
     }
 
-    public void changeToDoStatus(User user){
+    public void changeToDo(User user, String todo){
+
+
+
+    }
+
+    public void changeToDoStatus(User user,Boolean status){
 
 
     }
@@ -81,6 +87,8 @@ public class DatabaseAccessController {
     private void removeToDo(){
 
     }
+
+
 
     private int getUserIdFromDataBase(User user) throws SQLException {
         int id = 0;
@@ -93,7 +101,7 @@ public class DatabaseAccessController {
         return id;
     }
 
-    public void showAllToDo(User user) throws SQLException {
+    public void getToDoListByUser(User user) throws SQLException {
         String todo=null;
         Boolean isCompleted = false;
         sql = "select todo,iscompleted from todo where userid = ('"+getUserIdFromDataBase(user)+"')";
@@ -104,7 +112,6 @@ public class DatabaseAccessController {
             System.out.println("ToDo: " + todo + "     Status: " + isCompleted);
 
         }
-
     }
 
 }
