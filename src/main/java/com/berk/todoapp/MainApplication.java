@@ -1,6 +1,7 @@
 package com.berk.todoapp;
 
 import com.berk.todoapp.controller.DatabaseAccessController;
+import com.berk.todoapp.controller.PageController;
 import com.berk.todoapp.model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,23 +15,11 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/signup-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/welcome-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Giriş Ekranı");
+        stage.setTitle("Welcome");
         stage.setScene(scene);
         stage.show();
-
-        User user = new User();
-        user.setEmail("said");
-
-
-
-
-        DatabaseAccessController.getInstance().getToDoListByUser(user);
-        DatabaseAccessController.getInstance().addToDo(user,"şunu götür getir");
-
-
-
 
 
     }
