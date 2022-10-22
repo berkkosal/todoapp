@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class PageController {
 
-    public void switchToSignUpPage() throws IOException {
+    public void  switchToSignUpPage() throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/signup-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());

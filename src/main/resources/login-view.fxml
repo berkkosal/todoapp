@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.berk.todoapp.controller.LoginController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="508.0" prefWidth="322.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.berk.todoapp.controller.LoginController">
+   <children>
+      <TextField fx:id="emailLoginTextField" layoutX="72.0" layoutY="132.0" promptText="E-Mail" />
+      <PasswordField fx:id="passwordLoginPassField" layoutX="72.0" layoutY="197.0" promptText="Password" />
+      <Button fx:id="loginButton" layoutX="132.0" layoutY="300.0" mnemonicParsing="false" onAction="#loginButtonOnAction" text="Login" />
+   </children>
 </AnchorPane>
