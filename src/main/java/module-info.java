@@ -16,4 +16,6 @@ module com.berk.todoapp {
     exports com.berk.todoapp;
     exports com.berk.todoapp.controller;
     opens com.berk.todoapp.controller to javafx.fxml;
+    opens com.berk.todoapp.model to javafx.base;
+
 }

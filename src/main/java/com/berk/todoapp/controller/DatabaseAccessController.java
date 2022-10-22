@@ -1,8 +1,10 @@
 package com.berk.todoapp.controller;
 
+import com.berk.todoapp.model.ToDo;
 import com.berk.todoapp.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseAccessController {
     //***************************Lazy Singeleton***************************//
@@ -101,18 +103,23 @@ public class DatabaseAccessController {
         statement.executeBatch();
 
     }
-    public void changeToDo(User user, String todo){
 
-
-
-    }
-    public void changeToDoStatus(User user,Boolean status){
+    public void changeToDoStatus(Boolean status) throws SQLException {
+        status = false;
+        sql = "update todo set iscompleted = false where userid = 1 ";
+        statement.executeQuery(sql);
 
 
     }
     private void removeToDo(){
 
     }
+
+    public void changeToDo(User user, String todo){
+
+
+    }
+
     private User getUserByEmail(String email) throws SQLException {
         sql = "select * from users where email = '"+email+"'";
         ResultSet rs = statement.executeQuery(sql);
@@ -134,24 +141,24 @@ public class DatabaseAccessController {
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()){
             id = rs.getInt("id");
-            System.out.println("User id metottan gelen : " + id);
         }
         return id;
     }
-    public void getToDoListByUser(User user) throws SQLException {
-        String todo=null;
-        Boolean isCompleted = false;
-        sql = "select todo,iscompleted from todo where userid = ('"+getUserIdFromDataBase(user)+"')";
+    public ArrayList<ToDo> getToDoListByLoggedUser() throws SQLException {
+        ArrayList<ToDo> list = new ArrayList<>();
+        sql = "select * from todo where userid = ('"+getUserIdFromDataBase(loggedUser)+"')";
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()){
-            todo = rs.getString("todo");
-            isCompleted = rs.getBoolean("iscompleted");
-            System.out.println("ToDo: " + todo + "     Status: " + isCompleted);
-
+            ToDo toDo = new ToDo();
+            toDo.setId(rs.getInt("id"));
+            toDo.setUserid(loggedUser.getId());
+            toDo.setTodo(rs.getString("todo"));
+            toDo.setIscompleted(rs.getBoolean("iscompleted"));
+            list.add(toDo);
         }
+        return list;
     }
-
-
-
-
+    public static User getLoggedUser() {
+        return loggedUser;
+    }
 }
