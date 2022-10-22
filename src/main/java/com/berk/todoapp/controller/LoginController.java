@@ -24,7 +24,8 @@ public class LoginController {
             User user = new User();
             user.setEmail(emailLoginTextField.getText());
             user.setPassword(passwordLoginPassField.getText());
-            DatabaseAccessController.getInstance().validateUsernameAndPassword(user);
+            //DatabaseAccessController.getInstance().validateUsernameAndPassword(user);
+            DatabaseAccessController.getInstance().validateLogin(user);
 
 
         }catch (Exception e){

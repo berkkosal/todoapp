@@ -40,6 +40,7 @@ public class DatabaseAccessController {
 
 
 
+
     //User registration
     private void addUser(User user) throws SQLException {
         sql = "insert into users (email, password) values ('" + user.getEmail() + "','" + user.getPassword() + "')";
@@ -60,32 +61,28 @@ public class DatabaseAccessController {
 
 
     //User login
-    /*
-    public void validateUsernameAndPassword(User user) throws SQLException {
-       LoginController lc= new LoginController();
-        sql ="select * from users where email= '"+ email +"'"; //and password ='"+ pass +"'";
-        ResultSet rs = statement.executeQuery(sql);
-    }
-    */
-
-    public void validateUsernameAndPassword(User user) throws SQLException {
-
+    public boolean validateUsername(User user) throws SQLException {
+        boolean flag = false;
         sql ="select * from users where email= '"+ user.getEmail() +"'";
         ResultSet rs = statement.executeQuery(sql);
-
-        if((rs.next())){
-
-            sql = "select password from users where userid='"+getUserIdFromDataBase(user)+"'";
-            rs = statement.executeQuery(sql);
-            System.out.println(rs);
-
-
-
-
-        } else System.out.println("Böyle bir kullanıcı bulunamadı.");
-
-
+       while (rs.next()){
+           flag = true;
+       }
+       return flag;
     }
+    public void validateLogin(User user) throws SQLException {
+        if (validateUsername(user)){
+            sql = "select password from users where id = '"+getUserIdFromDataBase(user)+"'";
+            ResultSet rs = statement.executeQuery(sql);
+             ;
+            if (rs.next() && encoder.matches(user.getPassword(),rs.getString("password"))){
+                System.out.println("Successfully logged in.");
+            } else System.out.println("Password is wrong.");
+        } else {
+            System.out.println("Username is wrong.");
+        }
+    }
+
 
 
 
@@ -114,7 +111,7 @@ public class DatabaseAccessController {
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()){
             id = rs.getInt("id");
-            System.out.println("User id : " + id);
+            System.out.println("User id metottan gelen : " + id);
         }
         return id;
     }
@@ -131,6 +128,7 @@ public class DatabaseAccessController {
         }
     }
 
-    //
+
+
 
 }
