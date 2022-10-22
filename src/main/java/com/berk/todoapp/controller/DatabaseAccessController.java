@@ -60,24 +60,33 @@ public class DatabaseAccessController {
 
 
     //User login
+    /*
     public void validateUsernameAndPassword(User user) throws SQLException {
        LoginController lc= new LoginController();
-        String email =lc.getEmailLoginTextField().getText();
-       // String pass = lc.getPasswordLoginPassField().getText();
-        System.out.println(email);
-     //   System.out.println(pass);
-
-
-
         sql ="select * from users where email= '"+ email +"'"; //and password ='"+ pass +"'";
         ResultSet rs = statement.executeQuery(sql);
+    }
+    */
+
+    public void validateUsernameAndPassword(User user) throws SQLException {
+
+        sql ="select * from users where email= '"+ user.getEmail() +"'";
+        ResultSet rs = statement.executeQuery(sql);
+
+        if((rs.next())){
+
+            sql = "select password from users where userid='"+getUserIdFromDataBase(user)+"'";
+            rs = statement.executeQuery(sql);
+            System.out.println(rs);
 
 
 
+
+        } else System.out.println("Böyle bir kullanıcı bulunamadı.");
 
 
     }
-  //  public void validateUsername(User user){
+
 
 
     //Dashboard actions

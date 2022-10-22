@@ -18,14 +18,17 @@ public class LoginController {
 
 
 
-
     public void loginButtonOnAction() throws SQLException {
 
         try {
             User user = new User();
-
+            user.setEmail(emailLoginTextField.getText());
+            user.setPassword(passwordLoginPassField.getText());
             DatabaseAccessController.getInstance().validateUsernameAndPassword(user);
+
+
         }catch (Exception e){
+
             System.out.println("hata ");
         }
 
