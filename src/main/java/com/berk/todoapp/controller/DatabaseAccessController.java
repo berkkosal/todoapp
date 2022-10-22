@@ -2,6 +2,7 @@ package com.berk.todoapp.controller;
 
 import com.berk.todoapp.model.ToDo;
 import com.berk.todoapp.model.User;
+import javafx.scene.control.CheckBox;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.sql.*;
 import java.util.ArrayList;
@@ -97,28 +98,26 @@ public class DatabaseAccessController {
 
 
     //Dashboard actions
-    public void addToDo(User user,String todo) throws SQLException {
-        sql = "insert into todo (userid,todo) values ('"+getUserIdFromDataBase(user)+"','"+todo+"')";
+    public void addToDoDataBase(String todo) throws SQLException {
+        sql = "insert into todo (userid,todo) values ('"+loggedUser.getId()+"','"+todo+"')";
         statement.addBatch(sql);
         statement.executeBatch();
 
     }
+    public void changeToDoStatusById(Boolean status,int id){
+       try {
+           sql = "update todo set iscompleted = "+status+" where id = "+id+" ";
+           statement.executeUpdate(sql);
+       }catch (Exception e){
 
-    public void changeToDoStatus(Boolean status) throws SQLException {
-        status = false;
-        sql = "update todo set iscompleted = false where userid = 1 ";
-        statement.executeQuery(sql);
-
+       }
+    }
+    public void removeToDo(int id) throws SQLException {
+        sql = "delete from todo where id = "+id+"";
+        statement.executeUpdate(sql);
 
     }
-    private void removeToDo(){
 
-    }
-
-    public void changeToDo(User user, String todo){
-
-
-    }
 
     private User getUserByEmail(String email) throws SQLException {
         sql = "select * from users where email = '"+email+"'";
@@ -150,7 +149,11 @@ public class DatabaseAccessController {
         ResultSet rs = statement.executeQuery(sql);
         while (rs.next()){
             ToDo toDo = new ToDo();
+            CheckBox checkBox = new CheckBox();
+            checkBox.setSelected(rs.getBoolean("iscompleted"));
             toDo.setId(rs.getInt("id"));
+            checkBox.setOnAction(actionEvent -> changeToDoStatusById(checkBox.isSelected(),toDo.getId()));
+            toDo.setCheckBox(checkBox);
             toDo.setUserid(loggedUser.getId());
             toDo.setTodo(rs.getString("todo"));
             toDo.setIscompleted(rs.getBoolean("iscompleted"));

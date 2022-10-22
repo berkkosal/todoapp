@@ -5,12 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -19,13 +15,17 @@ import java.util.ResourceBundle;
 
 public class ToDoController implements Initializable {
     @FXML
+    private Button addButton;
+    @FXML
+    private TextField todoTextField;
+    @FXML
+    private Button deleteButton;
+    @FXML
     private TableView<ToDo> tableView;
     @FXML
     private TableColumn<ToDo, String> todoColumn;
     @FXML
-    private TableColumn<ToDo, Boolean> statusColumn;
-
-
+    private TableColumn<ToDo, CheckBox> statusColumn;
 
     private ObservableList<ToDo> observableList = FXCollections.observableArrayList();
 
@@ -33,7 +33,7 @@ public class ToDoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         todoColumn.setCellValueFactory(new PropertyValueFactory<ToDo, String>("todo"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<ToDo, Boolean>("iscompleted"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<ToDo, CheckBox>("checkBox"));
         tableView.setItems(observableList);
 
         try {
@@ -43,6 +43,23 @@ public class ToDoController implements Initializable {
             throw new RuntimeException(e);
         }
 
+
+    }
+
+    @FXML
+    public void addButtonOnAction() throws SQLException {
+        ToDo toDo = new ToDo();
+        toDo.setTodo(todoTextField.getText());
+        toDo.setIscompleted(false);
+        observableList.add(toDo);
+        DatabaseAccessController.getInstance().addToDoDataBase(todoTextField.getText());
+    }
+
+    @FXML
+    public void deleteButtonOnAction() throws SQLException {
+        ToDo toDo = tableView.getSelectionModel().getSelectedItem();
+        observableList.remove(toDo);
+        DatabaseAccessController.getInstance().removeToDo(toDo.getId());
 
     }
 

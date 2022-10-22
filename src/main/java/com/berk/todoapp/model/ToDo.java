@@ -2,6 +2,7 @@ package com.berk.todoapp.model;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.CheckBox;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ public class ToDo {
     private int userid;
     private String todo;
     private Boolean iscompleted;
+    private CheckBox checkBox;
 
 
 
@@ -39,6 +41,13 @@ public class ToDo {
         this.todo = todo;
     }
 
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
+    }
 
     public Boolean getIscompleted() {
         return iscompleted;
