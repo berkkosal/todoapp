@@ -1,15 +1,23 @@
 package com.berk.todoapp.controller;
 
-import com.berk.todoapp.model.ToDo;
 import com.berk.todoapp.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DatabaseAccessController {
     //***************************Singeleton***************************//
     private static DatabaseAccessController instance;
+    private void init() {
+        try {
+            //Bağlantı nesnesi
+            connection = DriverManager.getConnection(dataSource, dataUsername, dataPassword);
+            System.out.println("Connected to the database");
+            //Baglanti nesnesi uzerinden islem yapmaya yarayan nesne "Statement"
+            statement = connection.createStatement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private DatabaseAccessController() {
         init();
     }
@@ -31,26 +39,13 @@ public class DatabaseAccessController {
 
 
 
-    private void init() {
-        try {
-            //Bağlantı nesnesi
-            connection = DriverManager.getConnection(dataSource, dataUsername, dataPassword);
-            System.out.println("Connected to the database");
-            //Baglanti nesnesi uzerinden islem yapmaya yarayan nesne "Statement"
-            statement = connection.createStatement();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-
+    //User registration
     private void addUser(User user) throws SQLException {
         sql = "insert into users (email, password) values ('" + user.getEmail() + "','" + user.getPassword() + "')";
         statement.addBatch(sql);
         statement.executeBatch();
     }
-
-
     public void saveUser(User user) throws SQLException {
 
         user.setPassword(encoder.encode(user.getPassword()));
@@ -58,38 +53,52 @@ public class DatabaseAccessController {
         addUser(user);
 
     }
-
-
     private void sendMail(String email) {
 
 
     }
 
 
+    //User login
+    public void validateUsernameAndPassword(User user) throws SQLException {
+       LoginController lc= new LoginController();
+        String email =lc.getEmailLoginTextField().getText();
+       // String pass = lc.getPasswordLoginPassField().getText();
+        System.out.println(email);
+     //   System.out.println(pass);
+
+
+
+        sql ="select * from users where email= '"+ email +"'"; //and password ='"+ pass +"'";
+        ResultSet rs = statement.executeQuery(sql);
+
+
+
+
+
+    }
+  //  public void validateUsername(User user){
+
+
+    //Dashboard actions
     public void addToDo(User user,String todo) throws SQLException {
         sql = "insert into todo (userid,todo) values ('"+getUserIdFromDataBase(user)+"','"+todo+"')";
         statement.addBatch(sql);
         statement.executeBatch();
 
     }
-
     public void changeToDo(User user, String todo){
 
 
 
     }
-
     public void changeToDoStatus(User user,Boolean status){
 
 
     }
-
     private void removeToDo(){
 
     }
-
-
-
     private int getUserIdFromDataBase(User user) throws SQLException {
         int id = 0;
         sql = "select id from users where email =('"+user.getEmail()+"')";
@@ -100,7 +109,6 @@ public class DatabaseAccessController {
         }
         return id;
     }
-
     public void getToDoListByUser(User user) throws SQLException {
         String todo=null;
         Boolean isCompleted = false;
@@ -113,5 +121,7 @@ public class DatabaseAccessController {
 
         }
     }
+
+    //
 
 }
