@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.sql.*;
 
 public class DatabaseAccessController {
-    //***************************Singeleton***************************//
+    //***************************Lazy Singeleton***************************//
     private static DatabaseAccessController instance;
     private void init() {
         try {
@@ -36,6 +36,7 @@ public class DatabaseAccessController {
     private Connection connection = null;
     private Statement statement = null;
     private String sql;
+    private static User loggedUser;
 
 
 
@@ -70,8 +71,15 @@ public class DatabaseAccessController {
        }
        return flag;
     }
-    public void validateLogin(User user) throws SQLException {
-        if (validateUsername(user)){
+    public void validateLogin(User user) throws Exception {
+
+        User dbUser = getUserByEmail(user.getEmail());
+        if (dbUser==null || ! encoder.matches(user.getPassword(), dbUser.getPassword())) {
+            throw new Exception("Kullanıcı adı veya şifre yanlış.");
+        } loggedUser = dbUser;
+
+
+        /*if (validateUsername(user)){
             sql = "select password from users where id = '"+getUserIdFromDataBase(user)+"'";
             ResultSet rs = statement.executeQuery(sql);
              ;
@@ -80,7 +88,7 @@ public class DatabaseAccessController {
             } else System.out.println("Password is wrong.");
         } else {
             System.out.println("Username is wrong.");
-        }
+        } */
     }
 
 
@@ -103,6 +111,21 @@ public class DatabaseAccessController {
 
     }
     private void removeToDo(){
+
+    }
+    private User getUserByEmail(String email) throws SQLException {
+        sql = "select * from users where email = '"+email+"'";
+        ResultSet rs = statement.executeQuery(sql);
+
+        if (rs.next()){
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            return user;
+        }
+
+        return null;
 
     }
     private int getUserIdFromDataBase(User user) throws SQLException {

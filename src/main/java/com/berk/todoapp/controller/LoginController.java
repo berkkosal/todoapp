@@ -2,10 +2,10 @@ package com.berk.todoapp.controller;
 
 import com.berk.todoapp.model.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
 import java.sql.SQLException;
 
 public class LoginController {
@@ -19,22 +19,23 @@ public class LoginController {
 
 
     public void loginButtonOnAction() throws SQLException {
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         try {
             User user = new User();
             user.setEmail(emailLoginTextField.getText());
             user.setPassword(passwordLoginPassField.getText());
-            //DatabaseAccessController.getInstance().validateUsernameAndPassword(user);
             DatabaseAccessController.getInstance().validateLogin(user);
+            PageController.getInstance().switchToDashboard();
 
 
         }catch (Exception e){
+            alert.setTitle("HATA");
+            alert.setContentText(e.getMessage());
+            alert.show();
 
-            System.out.println("hata ");
         }
 
-        //System.out.println(emailLoginTextField.getText());
-        //System.out.println(passwordLoginPassField.getText());
+
 
     }
 

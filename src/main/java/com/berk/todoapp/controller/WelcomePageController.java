@@ -23,17 +23,17 @@ public class WelcomePageController {
     private Button loginButton;
     @FXML
     private Button signUpButton;
-    PageController pc = new PageController();
+
 
     public static int darkMode;
 
     public void loginButtonOnAction() throws IOException {
-        pc.switchToLoginPage();
+        PageController.getInstance().switchToLoginPage();
     }
 
 
     public void signUpButtonOnAction() throws IOException {
-        pc.switchToSignUpPage();
+        PageController.getInstance().switchToSignUpPage();
     }
 
     public void dModeToggleButtonOnAction() {

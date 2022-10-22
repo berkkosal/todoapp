@@ -8,13 +8,21 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class PageController {
+    //*******************EAGER SINGELETON*******************//
+    private PageController(){
+
+    }
+    private static PageController instance = new PageController();
+    public static PageController getInstance() {
+        return instance;
+    }
 
     public void  switchToSignUpPage() throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/signup-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
-        stage.setTitle("Giriş Ekranı");
+        stage.setTitle("SignUp");
         stage.setScene(scene);
         stage.show();
     }
