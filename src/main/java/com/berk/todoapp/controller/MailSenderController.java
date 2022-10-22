@@ -11,6 +11,11 @@ public class MailSenderController {
     private JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
     private Properties props = mailSender.getJavaMailProperties();
 
+    private static MailSenderController instance = new MailSenderController();
+    public static MailSenderController getInstance() {
+        return instance;
+    }
+
     public MailSenderController(){
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);

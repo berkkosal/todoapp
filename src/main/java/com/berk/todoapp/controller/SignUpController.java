@@ -28,6 +28,7 @@ public class SignUpController {
             user.setEmail(emailRegisterTextField.getText());
             user.setPassword(passwordRegisterPassField.getText());
             DatabaseAccessController.getInstance().saveUser(user);
+            MailSenderController.getInstance().sendMail(user.getEmail());
             alert.setContentText("Başarıyla eklendi.");
             alert.setTitle("Helal kayıt oldun");
             alert.setAlertType(Alert.AlertType.INFORMATION);
